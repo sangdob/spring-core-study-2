@@ -17,22 +17,8 @@ public class TraceId {
         this.level = level;
     }
 
-
-    // uuid의 8자리를 사용하는
-    private String createId() {
-        return UUID.randomUUID().toString().substring(0, 8);
-    }
-
-    private TraceId craeteNextId() {
+    public TraceId craeteNextId() {
         return new TraceId(id, level + 1);
-    }
-
-    private TraceId createPrevId() {
-        return new TraceId(id, level -1);
-    }
-
-    public boolean isFirstLevel() {
-        return this.level == 0;
     }
 
     public String getId() {
@@ -42,5 +28,20 @@ public class TraceId {
     public int getLevel() {
         return level;
     }
+
+    // uuid의 8자리를 사용하는
+    private String createId() {
+        return UUID.randomUUID().toString().substring(0, 8);
+    }
+
+
+    private TraceId createPrevId() {
+        return new TraceId(id, level -1);
+    }
+
+    public boolean isFirstLevel() {
+        return this.level == 0;
+    }
+
 
 }
