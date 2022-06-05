@@ -21,6 +21,10 @@ public class TraceId {
         return new TraceId(id, level + 1);
     }
 
+    public TraceId createPrevId() {
+        return new TraceId(id, level -1);
+    }
+
     public String getId() {
         return id;
     }
@@ -35,9 +39,6 @@ public class TraceId {
     }
 
 
-    private TraceId createPrevId() {
-        return new TraceId(id, level -1);
-    }
 
     public boolean isFirstLevel() {
         return this.level == 0;
