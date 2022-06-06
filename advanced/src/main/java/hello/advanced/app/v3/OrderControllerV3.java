@@ -16,7 +16,7 @@ public class OrderControllerV3 {
     @Autowired
     private final LogTrace trace;
 
-    @GetMapping("/v2/request")
+    @GetMapping("/v3/request")
     public String request(String itemId) {
 
         TraceStatus traceStatus = null;
