@@ -1,37 +1,41 @@
-package hello.advanced.app.v2;
+package hello.advanced.app.v3;
 
 import hello.advanced.trace.TraceId;
 import hello.advanced.trace.TraceStatus;
 import hello.advanced.trace.hellotrace.HelloTraceV2;
+import hello.advanced.trace.logtrace.LogTrace;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 
-@Service
+@Repository
 @RequiredArgsConstructor
-public class OrderServiceV2 {
+public class OrderRepositoryV3 {
 
-    private final OrderRepositoryV2 orderRepositoryV2;
-    private final HelloTraceV2 trace;
+    private final LogTrace trace;
 
-    public void orderItem(String itemId) {
+    public void save(String itemId) {
         TraceStatus status = null;
         try {
             status = trace.begin(itemId);
-            orderRepositoryV2.save(itemId);
-            trace.end(status);
+
+            if (itemId.equals("ex")) {
+                throw new IllegalArgumentException("Exception!! ");
+            }
             sleep(100);
         } catch (Exception e) {
             trace.exception(status, e);
             throw e;
         }
+
     }
 
-    public void orderItem(TraceId traceId, String itemId) {
+    public void save(TraceId traceId, String itemId) {
         TraceStatus status = null;
         try {
-            status = trace.beginSync(traceId, this.getClass().getName().toString());
-            orderRepositoryV2.save(traceId, itemId);
-            trace.end(status);
+            status = trace.begin(this.getClass().getName().toString());
+            if (itemId.equals("ex")) {
+                throw new IllegalArgumentException("Exception!! ");
+            }
         } catch (Exception e) {
             trace.exception(status, e);
             throw e;
@@ -43,8 +47,8 @@ public class OrderServiceV2 {
             Thread.sleep(millis);
         } catch (InterruptedException e) {
             e.getMessage();
+
         }
     }
 
 }
-
