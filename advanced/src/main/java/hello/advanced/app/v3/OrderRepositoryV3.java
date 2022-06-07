@@ -16,7 +16,7 @@ public class OrderRepositoryV3 {
     public void save(String itemId) {
         TraceStatus status = null;
         try {
-            status = trace.begin(itemId);
+            status = trace.begin(this.getClass().getName());
 
             if (itemId.equals("ex")) {
                 throw new IllegalArgumentException("Exception!! ");
@@ -32,7 +32,7 @@ public class OrderRepositoryV3 {
     public void save(TraceId traceId, String itemId) {
         TraceStatus status = null;
         try {
-            status = trace.begin(this.getClass().getName().toString());
+            status = trace.begin(this.getClass().getName());
             if (itemId.equals("ex")) {
                 throw new IllegalArgumentException("Exception!! ");
             }

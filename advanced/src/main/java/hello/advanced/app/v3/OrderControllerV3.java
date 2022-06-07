@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class OrderControllerV3 {
     private final OrderServiceV3 orderServiceV3;
 
-    @Autowired
     private final LogTrace trace;
 
     @GetMapping("/v3/request")

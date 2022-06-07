@@ -14,36 +14,15 @@ public class OrderServiceV3 {
     private final OrderRepositoryV3 orderRepositoryV3;
     private final LogTrace trace;
 
-    public void orderItem(String itemId) {
-        TraceStatus status = null;
-        try {
-            status = trace.begin(itemId);
-            orderRepositoryV3.save(itemId);
-            trace.end(status);
-            sleep(100);
-        } catch (Exception e) {
-            trace.exception(status, e);
-            throw e;
-        }
-    }
-
     public void orderItem(TraceId traceId, String itemId) {
         TraceStatus status = null;
         try {
-            status = trace.begin(this.getClass().getName().toString());
-            orderRepositoryV3.save(traceId, itemId);
+            status = trace.begin(this.getClass().getName());
+            orderRepositoryV3.save(itemId);
             trace.end(status);
         } catch (Exception e) {
             trace.exception(status, e);
             throw e;
-        }
-    }
-
-    private void sleep(int millis) {
-        try {
-            Thread.sleep(millis);
-        } catch (InterruptedException e) {
-            e.getMessage();
         }
     }
 
