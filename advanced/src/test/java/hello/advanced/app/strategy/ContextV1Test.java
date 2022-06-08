@@ -1,6 +1,7 @@
 package hello.advanced.app.strategy;
 
 import hello.advanced.app.strategy.code.strategy.ContextV1;
+import hello.advanced.app.strategy.code.strategy.Strategy;
 import hello.advanced.app.strategy.code.strategy.StrategyLogic1;
 import hello.advanced.app.strategy.code.strategy.StrategyLogic2;
 import lombok.extern.slf4j.Slf4j;
@@ -54,4 +55,43 @@ public class ContextV1Test {
         contextV2.execute();
     }
 
+    @Test
+    void strategyV2() {
+        Strategy strategy = new Strategy() {
+            @Override
+            public void call() {
+                log.info("비즈니스로직 인라인 호출 ");
+            }
+        };
+        ContextV1 contextV1 = new ContextV1(strategy);
+        contextV1.execute();
+    }
+
+    @Test
+    void strategyV3() {
+        ContextV1 contextV1 = new ContextV1(new Strategy() {
+            @Override
+            public void call() {
+                log.info("익명클래스 호출 ");
+            }
+        });
+        contextV1.execute();
+
+        ContextV1 contextV2 = new ContextV1(new Strategy() {
+            @Override
+            public void call() {
+                log.info("익명클래스 호출 ");
+            }
+        });
+        contextV2.execute();
+    }
+
+    @Test
+    void strategyV4() {
+        ContextV1 contextV1 = new ContextV1(() -> log.info("익명클래스1 호출 "));
+        contextV1.execute();
+
+        ContextV1 contextV2 = new ContextV1(() -> log.info("익명클래스2 호출 "));
+        contextV2.execute();
+    }
 }
