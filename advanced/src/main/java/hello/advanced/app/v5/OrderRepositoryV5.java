@@ -1,33 +1,32 @@
-package hello.advanced.app.v4.v3;
+package hello.advanced.app.v5;
 
 import hello.advanced.trace.TraceId;
 import hello.advanced.trace.TraceStatus;
+import hello.advanced.trace.callback.TraceTemplate;
 import hello.advanced.trace.logtrace.LogTrace;
 import hello.advanced.trace.templates.AbstractTemplate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 @Repository
-@RequiredArgsConstructor
-public class OrderRepositoryV4 {
+public class OrderRepositoryV5 {
 
-    private final LogTrace trace;
+    private final TraceTemplate template;
 
-    public void save(String itemId) {
-        AbstractTemplate<Void> template = new AbstractTemplate<>(trace) {
-            @Override
-            protected Void call() {
-                if (itemId.equals("ex")) {
-                    throw new IllegalArgumentException("Exception!! ");
-                }
-                sleep(100);
-                return null;
-            }
-        };
-        template.execute(this.getClass().getName());
+    public OrderRepositoryV5(LogTrace trace) {
+        this.template = new TraceTemplate(trace);
     }
 
-    public void save(TraceId traceId, String itemId) {
+    public void save(String itemId) {
+        template.execute(this.getClass().getName(), () -> {
+            if (itemId.equals("ex")) {
+                throw new IllegalArgumentException("Exception!! ");
+            }
+            return null;
+        });
+    }
+
+   /* public void save(TraceId traceId, String itemId) {
         TraceStatus status = null;
         try {
             status = trace.begin(this.getClass().getName());
@@ -38,7 +37,7 @@ public class OrderRepositoryV4 {
             trace.exception(status, e);
             throw e;
         }
-    }
+    }*/
 
     private void sleep(int millis) {
         try {
