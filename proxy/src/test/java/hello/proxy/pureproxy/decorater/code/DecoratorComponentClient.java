@@ -3,11 +3,11 @@ package hello.proxy.pureproxy.decorater.code;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class DecoratorComponent {
+public class DecoratorComponentClient {
 
     private Component component;
 
-    public DecoratorComponent(Component component) {
+    public DecoratorComponentClient(Component component) {
         this.component = component;
     }
 
