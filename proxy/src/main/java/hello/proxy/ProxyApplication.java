@@ -5,6 +5,7 @@ import hello.proxy.config.AppV2Config;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Import;
+
 /*
 * scanBasePackages를 통하여 컴포넌트 스캔을 지정하여 할 수 있도록 가능함.
 * */
