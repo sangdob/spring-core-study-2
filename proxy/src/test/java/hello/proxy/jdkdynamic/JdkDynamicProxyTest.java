@@ -22,6 +22,7 @@ public class JdkDynamicProxyTest {
         log.info("targetClass = {}", target.getClass());
         log.info("proxyClass = {}", proxy.getClass());
     }
+
     @Test
     void dynamicB() {
         BInterface target = new BImpl();
