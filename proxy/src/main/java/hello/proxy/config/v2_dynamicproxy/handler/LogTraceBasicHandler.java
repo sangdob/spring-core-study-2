@@ -14,7 +14,7 @@ public class LogTraceBasicHandler implements InvocationHandler {
         this.target = object;
         this.logTrace = logTrace;
     }
-
+//InvocationHandler interface활용
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
         TraceStatus status = null;
