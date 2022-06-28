@@ -19,7 +19,6 @@ public class TimeAdvice implements MethodInterceptor {
         long resultTime = endTime - startTime;
         log.info("result Time = {}",resultTime);
 
-
         return result;
     }
 }
