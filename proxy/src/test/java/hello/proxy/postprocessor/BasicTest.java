@@ -3,7 +3,9 @@ package hello.proxy.postprocessor;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
+import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,7 +14,7 @@ import org.springframework.context.annotation.Configuration;
 public class BasicTest {
     @Test
     void basicConfig() {
-        AnnotationConfigApplicationContext annotationConfigApplicationContext = new AnnotationConfigApplicationContext(BasicConfig.class);
+        AnnotationConfigApplicationContext annotationConfigApplicationContext = new AnnotationConfigApplicationContext(BeanPostProcessorConfig.class);
 
         A a = annotationConfigApplicationContext.getBean("beanA", A.class);
         a.helloA();
@@ -22,15 +24,20 @@ public class BasicTest {
     }
 
     @Configuration
-    static class BasicConfig {
+    static class BeanPostProcessorConfig {
         @Bean(name = "beanA")
         public A a() {
             return new A();
         }
 
-        @Bean(name = "beanB")
-        public B b() {
-            return new B();
+//        @Bean(name = "beanB")
+//        public B b() {
+//            return new B();
+//        }
+
+        @Bean
+        public AToBPostProcessor helloPostProcessor() {
+            return new AToBPostProcessor();
         }
     }
 
@@ -46,5 +53,15 @@ public class BasicTest {
         }
     }
 
+    static class AToBPostProcessor implements BeanPostProcessor {
+        @Override
+        public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
+            log.info("beanName = {} , bean = {} ", beanName, bean);
+            if (bean instanceof A) {
+                return new B();
+            }
+            return bean;
+        }
+    }
 }
 
