@@ -14,7 +14,7 @@ public class OrderService {
     }
 
     public void orderItem(String itemId) {
-        log.info("[orderService] start");
+        log.info("[orderService] start {}", itemId);
         orderRepository.save(itemId);
     }
 }
