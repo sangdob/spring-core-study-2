@@ -7,7 +7,13 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class OrderRepository {
 
-    public void save(String itemId) {
+    public String save(String itemId) {
         log.info("[orderRepository] start {}", itemId);
+
+        if(itemId.equals("ex")){
+            throw new IllegalStateException("exception!!");
+        }
+
+        return "ok";
     }
 }
