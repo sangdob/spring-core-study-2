@@ -20,9 +20,9 @@ public class AopTest {
 
     @Autowired
     OrderService orderService;
-
     @Autowired
     OrderRepository orderRepository;
+
     @Test
     void aopInfo() {
         log.info("isAopProxy, orderService={}",
@@ -30,10 +30,12 @@ public class AopTest {
         log.info("isAopProxy, orderRepository={}",
                 AopUtils.isAopProxy(orderRepository));
     }
+
     @Test
     void success() {
         orderService.orderItem("itemA");
     }
+
     @Test
     void exception() {
         assertThatThrownBy(() -> orderService.orderItem("ex"))
