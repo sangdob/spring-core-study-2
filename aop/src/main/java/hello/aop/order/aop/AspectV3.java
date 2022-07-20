@@ -14,13 +14,14 @@ public class AspectV3 {
 
     @Pointcut("execution(* *..*Service.*(..))")
     private void allService(){}
+
     @Around("allOrder()")
     public Object doLog(ProceedingJoinPoint joinPoint) throws Throwable {
         log.info("[log] {}", joinPoint.getSignature());
         return joinPoint.proceed();
     }
 
-    @Around("allOrder()")
+    @Around("allService()")
     public Object doLog2(ProceedingJoinPoint joinPoint) throws Throwable {
         log.info("[log] {}", joinPoint.getSignature());
         return joinPoint.proceed();
