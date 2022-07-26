@@ -16,11 +16,11 @@ import org.springframework.context.annotation.Import;
 import static org.assertj.core.api.Assertions.*;
 
 @Slf4j
+@Import(AspectV6Advice.class)
 @SpringBootTest
 //@Import(AspectV1.class)
 //@Import(AspectV2.class)
 //@Import(AspectV3.class)
-@Import(AspectV6Advice.class)
 public class AopTest {
 
     @Autowired
