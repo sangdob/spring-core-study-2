@@ -20,6 +20,7 @@ public class OrderService {
         orderRepository.save(itemId);
     }
 
+//    service 커밋용
     @Around("allOrder() && allService()")
     public Object doTransaction(ProceedingJoinPoint joinPoint) throws Throwable{
         try {
